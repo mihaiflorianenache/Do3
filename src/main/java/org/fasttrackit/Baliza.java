@@ -89,7 +89,15 @@ public class Baliza {
     }
 
     private void sendDataToController(){
-
+        try {
+            ObjectOutputStream outController = new ObjectOutputStream(socket.getOutputStream());
+            StateLine stateLine=new StateLine("The railway is occupied");
+            System.out.println("Balise send data to controller");
+            outController.writeObject(stateLine);
+            outController.flush();
+        }catch(Exception exception){
+            System.out.println("Balise can not send data to controller because of the error "+exception.getMessage());
+        }
     }
 
     class CommunicationController extends Thread{
