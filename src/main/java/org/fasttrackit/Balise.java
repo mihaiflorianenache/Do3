@@ -5,35 +5,44 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Baliza {
+public class Balise {
 
     private ServerSocket serverSocket;
     private Socket socket;
 
-    private void init(){
-        try {
-            serverSocket = new ServerSocket(1900);
-            while (true) {
-                socket = serverSocket.accept();
-                communication();
-            }
-        }catch(Exception exception){
-            System.out.println("Balise can not communicate with EVC or client controller because of the error "+exception.getMessage());
-        }
+    public static void main(String[] args){
+        Balise balise=new Balise();
+        balise.startCommunication();
     }
 
-    private void communication(){
+    private void startCommunication(){
         try {
-            CommunicationEVC communicationEVC=new CommunicationEVC();
-            CommunicationController communicationController=new CommunicationController();
+            CallConnectionToEVC callConnectionToEVC = new CallConnectionToEVC();
+            CallConnectionToController callConnectionToController = new CallConnectionToController();
 
-            communicationEVC.start();
-            communicationEVC.join();
-            communicationController.start();
+            callConnectionToEVC.start();
+            callConnectionToEVC.join();
+            callConnectionToController.start();
         }catch(InterruptedException exception){
             System.out.println("Balise can not wait to finish communicate with EVC because of the error "+exception.getMessage());
         }
     }
+
+    class CallConnectionToEVC extends Thread{
+        public void run(){
+            connectionToEVC();
+        }
+    }
+
+    class CallConnectionToController extends Thread{
+        public void run(){
+            connectionToController();
+        }
+    }
+
+    /************************************************************************************************************************/
+
+    //communication with EVC
 
     private void receiveCoordinatesFromEVC(){
         try {
@@ -65,24 +74,30 @@ public class Baliza {
         }
     }
 
-    class CommunicationEVC extends Thread{
-        public void run(){
-            try {
-                receiveCoordinatesFromEVC();
-                sendMovementAuthorityToEVC();
-                receiveConfirmationReceivingMovementAuthorityFromEVC();
-            }catch(Exception exception){
-                System.out.println("Balise can not receive data because of the error "+exception.getMessage());
-            }
+    private void phisicalConnectionEVC() {
+        receiveCoordinatesFromEVC();
+        sendMovementAuthorityToEVC();
+        receiveConfirmationReceivingMovementAuthorityFromEVC();
+    }
+
+    private void connectionToEVC(){
+        try {//balise is linking at EVC
+            serverSocket = new ServerSocket(1900);
+            socket = serverSocket.accept();
+            phisicalConnectionEVC();
+        }catch(Exception exception){
+            System.out.println("Balise can not communicate with EVC because of the error "+exception.getMessage());
         }
     }
 
-    /***************************************************************************************************************************/
+    /*****************************************************************************************************************************/
+
+    //communication with controller
 
     private void receiveDataFromController(){
         try{
             ObjectInputStream inController=new ObjectInputStream(socket.getInputStream());
-            System.out.println("Balise received from controller "+inController);
+            System.out.println("Balise received from controller "+inController.readObject());
         }catch(Exception exception){
             System.out.println("Balise can not receive data from controller because of the error "+exception.getMessage());
         }
@@ -100,15 +115,18 @@ public class Baliza {
         }
     }
 
-    class CommunicationController extends Thread{
-        public void run(){
-            receiveDataFromController();
-            sendDataToController();
-        }
+    private void phisicalConnectionController(){
+        receiveDataFromController();
+        sendDataToController();
     }
 
-    public static void main(String[] args){
-        Baliza balise=new Baliza();
-        balise.init();
+    private void connectionToController(){
+        try {
+            serverSocket = new ServerSocket(1901);
+            socket = serverSocket.accept();
+            phisicalConnectionController();
+        }catch(Exception exception){
+            System.out.println("Balise can not communicate with controller because of the error "+exception.getMessage());
+        }
     }
 }

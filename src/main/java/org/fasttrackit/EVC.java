@@ -45,7 +45,7 @@ public class EVC {
         try {
             ObjectOutputStream outBalise = new ObjectOutputStream(socket.getOutputStream());
             ConfirmationDataToBalise confirmationDataToBalise = new ConfirmationDataToBalise("EVC received movement authority from balise");
-            System.out.println("EVC send confirmation to balise regard of receiving movement authority");
+            System.out.println("EVC is sending confirmation to balise regard of receiving movement authority");
             outBalise.writeObject(confirmationDataToBalise);
             outBalise.flush();
         }catch(Exception exception){

@@ -9,7 +9,7 @@ public class Controller {
     public static void main(String args[]){
         try {
             InetAddress IP = InetAddress.getByName("localhost");
-            Socket socket= new Socket(IP, 1900);
+            Socket socket= new Socket(IP, 1901);
 
             Controller controller = new Controller();
             controller.sendDataToBalise(socket);
