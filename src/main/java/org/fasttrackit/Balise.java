@@ -12,7 +12,27 @@ public class Balise {
 
     public static void main(String[] args){
         Balise balise=new Balise();
-        balise.startCommunication();
+        balise.beginningCommunication();
+    }
+
+    private void beginningCommunication(){
+        ReceiveingDataFromController receiveingDataFromController=new ReceiveingDataFromController();
+        StartingCommunication startingCommunication=new StartingCommunication();
+
+        receiveingDataFromController.start();
+        startingCommunication.start();
+    }
+
+    class ReceiveingDataFromController extends Thread{
+        public void run(){
+            receiveDataFromController();
+        }
+    }
+
+    class StartingCommunication extends Thread{
+        public void run() {
+            startCommunication();
+        }
     }
 
     private void startCommunication(){
@@ -116,7 +136,6 @@ public class Balise {
     }
 
     private void phisicalConnectionController(){
-        receiveDataFromController();
         sendDataToController();
     }
 
