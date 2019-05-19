@@ -3,8 +3,10 @@ package GraphicInterface;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class PasswordFieldExample extends JFrame {
+public class PasswordFieldExample2 extends JFrame {
 
     private char passwordValue[];
     private String textValue="";
@@ -19,12 +21,12 @@ public class PasswordFieldExample extends JFrame {
     private JLabel labelCheckBoxTextPassword=new JLabel();
 
     public static void main(String args[]) {
-        PasswordFieldExample passwordFieldExample = new PasswordFieldExample();
+        PasswordFieldExample2 passwordFieldExample = new PasswordFieldExample2();
         passwordFieldExample.createElements(passwordFieldExample);
     }
 
-    private void createElements(final PasswordFieldExample passwordFieldExample) {
-        passwordFieldExample.setTitle("Password field example");
+    private void createElements(final PasswordFieldExample2 passwordFieldExample) {
+        passwordFieldExample.setTitle("Password field example2");
         passwordField.setBounds(100, 100, 181, 30);
 
         button.setBounds(100, 140, 180, 30);
@@ -47,7 +49,7 @@ public class PasswordFieldExample extends JFrame {
                     passwordFieldExample.add(textField);
                     textField.setText(textValue);
                     button.setText("Hide password");
-                    passwordFieldExample.setTitle("Text field example");
+                    passwordFieldExample.setTitle("Text field example2");
                     labelCheckBoxButton.setText("Deactivate text field");
                     labelCheckBoxTextPassword.setText("Deactivate "+"'"+"hide password"+"'"+" button");
                 } else {
@@ -57,7 +59,7 @@ public class PasswordFieldExample extends JFrame {
                     passwordFieldExample.add(passwordField);
                     passwordField.setText(textValue);
                     button.setText("See password");
-                    passwordFieldExample.setTitle("Password field example");
+                    passwordFieldExample.setTitle("Password field example2");
                     labelCheckBoxButton.setText("Deactivate password field");
                     labelCheckBoxTextPassword.setText("Deactivate "+"'"+"see password"+"'"+" button");
                 }
@@ -65,8 +67,41 @@ public class PasswordFieldExample extends JFrame {
         });
 
         textField.setBounds(100,100,181,30);
+
         checkBoxButton.setBounds(290, 155, 17, 17);
         checkBoxTextPassword.setBounds(290,114,17,17);
+
+        checkBoxButton.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent event){
+                if(checkBoxButton.isSelected()){
+                    button.setEnabled(false);
+                    if(button.getText().equals("See password")){
+                        labelCheckBoxTextPassword.setText("Activate "+"'"+"see password"+"'"+" button");
+                    }
+                    else{
+                        labelCheckBoxTextPassword.setText("Activate "+"'"+"hide password"+"'"+" button");
+                    }
+                }
+                else{
+                    button.setEnabled(true);
+                    if(button.getText().equals("See password")){
+                        labelCheckBoxTextPassword.setText("Activate "+"'"+"see password"+"'"+" button");
+                    }
+                    else{
+                        labelCheckBoxTextPassword.setText("Activate "+"'"+"hide password"+"'"+" button");
+                    }
+                }
+            }
+        });
+
+        checkBoxTextPassword.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent event){
+                if(checkBoxTextPassword.isSelected()){
+
+                }
+            }
+        });
+
         labelCheckBoxButton.setBounds(310,109,200,30);
         labelCheckBoxTextPassword.setBounds(310,150,200,30);
 
