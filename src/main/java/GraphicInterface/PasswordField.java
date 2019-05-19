@@ -1,13 +1,17 @@
 package GraphicInterface;
-
+/*
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-public class PasswordField {
+public class PasswordField extends JFrame{
 
     int numberPushButton=0;
     int numberPushCheckBox=0;
@@ -15,11 +19,11 @@ public class PasswordField {
     String text;
     String buttonText;
 
-    JFrame jf=new JFrame("Password field example");
     JPasswordField value=new JPasswordField();
     JButton button=new JButton("See password");
     JTextField textField=new JTextField();
     JCheckBox checkBoxButton=new JCheckBox();
+    JLabel labelButton=new JLabel("Deactivate button");
 
     MenuBar menuBar=new MenuBar();
     Menu file=new Menu("File");
@@ -27,22 +31,30 @@ public class PasswordField {
     MenuItem open=new MenuItem("Open");
     MenuItem exit=new MenuItem("Exit");
 
-    public void createElements(){
+    public static void main(String[] args){
+        PasswordField passwordField=new PasswordField();
+        passwordField.createElements(passwordField);
+    }
+
+    private void createElements(PasswordField passwordField){
+        passwordField.setTitle("Password field example");
         value.setBounds(20,100,180,30);
         button.setBounds(20,140,180,30);
         textField.setBounds(20,100,180,30);
         checkBoxButton.setBounds(210,138,50,50);
+        labelButton.setBounds(260,138,50,30);
         EventCheckBox eventCheckBox=new EventCheckBox();
         checkBoxButton.addItemListener(eventCheckBox);
 
         EventButton eventButton=new EventButton();
         button.addActionListener(eventButton);
-        jf.add(value);
-        jf.add(button);
-        jf.add(checkBoxButton);
-        jf.setSize(500,500);
-        jf.setLayout(null);
-        jf.setVisible(true);
+        passwordField.add(value);
+        passwordField.add(button);
+        passwordField.add(checkBoxButton);
+        passwordField.add(labelButton);
+        passwordField.setSize(500,500);
+        passwordField.setLayout(null);
+        passwordField.setVisible(true);
 
         Save ssave=new Save();
         save.addActionListener(ssave);
@@ -51,12 +63,7 @@ public class PasswordField {
         file.add(open);
         file.add(exit);
         menuBar.add(file);
-        jf.setMenuBar(menuBar);
-    }
-
-    public static void main(String[] args){
-        PasswordField passwordField=new PasswordField();
-        passwordField.createElements();
+        passwordField.setMenuBar(menuBar);
     }
 
     class EventButton implements ActionListener {
@@ -70,24 +77,24 @@ public class PasswordField {
                     parola = parola.concat(String.valueOf(password[i]));
                 }
                 textField.setText(parola);
-                jf.remove(value);
-                jf.add(textField);
+                passwordField.remove(value);
+                passwordField.add(textField);
                 buttonText=event.getActionCommand();
                 //of course that text is "See Password" but I want to exercise getActionCommand()
                 if(buttonText.equals("See password")) {
                     button.setText("Hide Password");
-                    jf.setTitle("Text field example");
+                    passwordField.setTitle("Text field example");
                 }
             }
             else{
                 text=textField.getText();
                 value.setText(text);
-                jf.remove(textField);
-                jf.add(value);
+                passwordField.remove(textField);
+                passwordField.add(value);
                 buttonText=event.getActionCommand();
                 if(buttonText.equals("Hide Password")){
                     button.setText("See password");
-                    jf.setTitle("Password field example");
+                    passwordField.setTitle("Password field example");
                 }
             }
         }
@@ -104,12 +111,26 @@ public class PasswordField {
         }
     }
 
+    private void salvare(String file)  {
+        try {
+            PrintWriter printWriter = new PrintWriter(new FileWriter(new File(file)));
+            printWriter.println(textField.getText());
+            printWriter.close();
+        }catch(Exception e)
+        {
+
+        }
+    }
+
     class Save implements ActionListener{
         public void actionPerformed(ActionEvent event){
             String save = ((MenuItem)event.getSource()).getLabel();//save="save"
             if(save.equals("save")){
-                FileDialog fileDialog=new FileDialog(Editor.this,);
+                FileDialog fileDialog=new FileDialog(PasswordField.this,"Save", FileDialog.SAVE);
+               // fileDialog.setVisible(true);
+                //salvare(fileDialog.getDirectory()+fileDialog.getFile());
             }
         }
     }
 }
+ */
