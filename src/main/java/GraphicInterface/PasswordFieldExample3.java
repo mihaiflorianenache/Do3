@@ -1,18 +1,34 @@
 package GraphicInterface;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.*;
 
-public class PasswordFieldExample2 extends JFrame {
+public class PasswordFieldExample3 extends JFrame {
 
-    //fara meniu
+    //cu meniu
 
     private char passwordValue[];
     private String textValue="";
     private int pushButton=0;
+    private String saveHardDisk;
+
+    /***********************************************************************************************************************/
+
+    //elementele legate de meniu
+
+    private MenuBar menuBar=new MenuBar();
+    private Menu menu=new Menu();
+    private MenuItem save=new MenuItem();
+    private MenuItem open=new MenuItem();
+
+    /***********************************************************************************************************************/
+
+    //elementele fizice din pagina
 
     private JPasswordField passwordField = new JPasswordField();
     private JButton button = new JButton("See password");
@@ -23,12 +39,18 @@ public class PasswordFieldExample2 extends JFrame {
     private JLabel labelCheckBoxTextPassword=new JLabel();
 
     public static void main(String args[]) {
-        PasswordFieldExample2 passwordFieldExample = new PasswordFieldExample2();
+        PasswordFieldExample3 passwordFieldExample = new PasswordFieldExample3();
         passwordFieldExample.createElements(passwordFieldExample);
     }
 
-    private void createElements(final PasswordFieldExample2 passwordFieldExample) {
-        passwordFieldExample.setTitle("Password field example2");
+    private void createElements(final PasswordFieldExample3 passwordFieldExample) {
+
+        /****************************************************************************************************************/
+
+        //elementele fizice
+        //si functionalitatea acestora din interfata
+
+        passwordFieldExample.setTitle("Password field example3");
         passwordField.setBounds(100, 100, 181, 30);
 
         button.setBounds(100, 140, 180, 30);
@@ -52,7 +74,7 @@ public class PasswordFieldExample2 extends JFrame {
                     passwordFieldExample.add(textField);
                     textField.setText(textValue);
                     button.setText("Hide password");
-                    passwordFieldExample.setTitle("Text field example2");
+                    passwordFieldExample.setTitle("Text field example3");
                     labelCheckBoxButton.setText("Deactivate text field");
                     labelCheckBoxTextPassword.setText("Deactivate "+"'"+"hide password"+"'"+" button");
                 } else {
@@ -62,7 +84,7 @@ public class PasswordFieldExample2 extends JFrame {
                     passwordFieldExample.add(passwordField);
                     passwordField.setText(textValue);
                     button.setText("See password");
-                    passwordFieldExample.setTitle("Password field example2");
+                    passwordFieldExample.setTitle("Password field example3");
                     labelCheckBoxButton.setText("Deactivate password field");
                     labelCheckBoxTextPassword.setText("Deactivate "+"'"+"see password"+"'"+" button");
                 }
@@ -169,5 +191,74 @@ public class PasswordFieldExample2 extends JFrame {
         passwordFieldExample.setSize(550, 500);
         passwordFieldExample.setLayout(null);
         passwordFieldExample.setVisible(true);
+
+        /****************************************************************************************************************/
+
+        //elementele legate de meniu
+
+        menu.setLabel("File");
+        save.setLabel("Save");
+
+        passwordFieldExample.setMenuBar(menuBar);
+        menuBar.add(menu);
+        menu.add(save);
+        menu.add(open);
+
+        save.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+
+                //se deschide fereastra cu ajutorul careia putem selecta locatia de pe hard disk
+                //in care sa salvam date
+
+                FileDialog fileDialog=new FileDialog(PasswordFieldExample3.this,"Save password",FileDialog.SAVE);
+                fileDialog.setVisible(true);
+                System.out.println("fileDialog.getDirectory()= "+fileDialog.getDirectory());
+                System.out.println("fileDialog.getFile()= "+fileDialog.getFile());
+
+                //metoda "save" se apeleaza
+                //dupa ce apas pe butonul save din FileDialog
+                save(fileDialog.getDirectory()+fileDialog.getFile());
+            }
+        });
+
+        open.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                FileDialog fileDialog =new FileDialog(PasswordFieldExample3.this,"Open file",FileDialog.LOAD);
+                fileDialog.setVisible(true);
+                open(fileDialog.getDirectory()+fileDialog.getFile());
+            }
+        });
+    }
+
+    private void save(String directoryNameFileForSave){
+        try{
+            PrintWriter printWriter=new PrintWriter(new FileWriter(new File(directoryNameFileForSave)));
+            if(button.getText().equals("See password")) {
+                int i;
+                //obligatoriu saveHardDisk se initializeaza cu null la fiecare apel al functiei save
+                saveHardDisk="";
+                for(i=0;i<passwordField.getPassword().length;i++) {
+                    saveHardDisk=saveHardDisk.concat(String.valueOf(passwordField.getPassword()[i]));
+                }
+                printWriter.println(saveHardDisk);
+            }
+            else{
+                saveHardDisk=textField.getText();
+                printWriter.println(saveHardDisk);
+            }
+            printWriter.close();
+        }catch(IOException exception)
+        {
+            System.out.println("Password can not be save because of the error "+exception.getMessage());
+        }
+    }
+
+    private void open(String directoryNameFileForOpen){
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(directoryNameFileForOpen)));
+
+        }catch(FileNotFoundException exception){
+            System.out.println("File can not be load because of the error "+exception.getMessage());
+        }
     }
 }
