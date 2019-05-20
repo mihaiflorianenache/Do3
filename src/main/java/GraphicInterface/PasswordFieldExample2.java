@@ -33,6 +33,7 @@ public class PasswordFieldExample2 extends JFrame {
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //I can see password's value
                 pushButton++;
                 if (pushButton % 2 != 0) {
                     passwordValue = passwordField.getPassword();
@@ -63,6 +64,38 @@ public class PasswordFieldExample2 extends JFrame {
                     labelCheckBoxButton.setText("Deactivate password field");
                     labelCheckBoxTextPassword.setText("Deactivate "+"'"+"see password"+"'"+" button");
                 }
+
+                /***********************************************************************************************************/
+
+                //checkbox-ul pentru a activa/dezactiva campul de vizualizare sau nevizualizare al parolei este activat
+                //si se da click pe buton
+                if(checkBoxTextPassword.isSelected() && button.getText().equals("See password")){
+                    passwordField.setEnabled(false);
+                    labelCheckBoxButton.setText("Activate password field");
+                }
+                else
+                {
+                    if(checkBoxTextPassword.isSelected() && button.getText().equals("Hide password")){
+                        textField.setEnabled(false);
+                        labelCheckBoxButton.setText("Activate text field");
+                    }
+                }
+
+                /**********************************************************************************************************/
+
+                //checkbox-ul pentru a activa/dezactiva campul de vizualizare sau nevizualizare al parolei este dezactivat
+                //si se da click pe buton
+                if(checkBoxTextPassword.isSelected()==false && button.getText().equals("See password")){
+                    passwordField.setEnabled(true);
+                    labelCheckBoxButton.setText("Deactivate password field");
+                }
+                else
+                {
+                    if(checkBoxTextPassword.isSelected()==false && button.getText().equals("Hide password")){
+                        textField.setEnabled(true);
+                        labelCheckBoxButton.setText("Deactivate text field");
+                    }
+                }
             }
         });
 
@@ -85,10 +118,10 @@ public class PasswordFieldExample2 extends JFrame {
                 else{
                     button.setEnabled(true);
                     if(button.getText().equals("See password")){
-                        labelCheckBoxTextPassword.setText("Activate "+"'"+"see password"+"'"+" button");
+                        labelCheckBoxTextPassword.setText("Deactivate "+"'"+"see password"+"'"+" button");
                     }
                     else{
-                        labelCheckBoxTextPassword.setText("Activate "+"'"+"hide password"+"'"+" button");
+                        labelCheckBoxTextPassword.setText("Deactivate "+"'"+"hide password"+"'"+" button");
                     }
                 }
             }
@@ -97,7 +130,24 @@ public class PasswordFieldExample2 extends JFrame {
         checkBoxTextPassword.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent event){
                 if(checkBoxTextPassword.isSelected()){
-
+                    if(button.getText().equals("See password")){
+                        passwordField.setEnabled(false);
+                        labelCheckBoxButton.setText("Activate password field");
+                    }
+                    else{
+                        textField.setEnabled(false);
+                        labelCheckBoxButton.setText("Activate text field");
+                    }
+                }
+                else{
+                    if(button.getText().equals("See password")){
+                        passwordField.setEnabled(true);
+                        labelCheckBoxButton.setText("Deactivate password field");
+                    }
+                    else{
+                        textField.setEnabled(true);
+                        labelCheckBoxButton.setText("Deactivate text field");
+                    }
                 }
             }
         });
