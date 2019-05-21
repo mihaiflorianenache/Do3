@@ -198,6 +198,7 @@ public class PasswordFieldExample3 extends JFrame {
 
         menu.setLabel("File");
         save.setLabel("Save");
+        open.setLabel("Open");
 
         passwordFieldExample.setMenuBar(menuBar);
         menuBar.add(menu);
@@ -256,8 +257,18 @@ public class PasswordFieldExample3 extends JFrame {
     private void open(String directoryNameFileForOpen){
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(directoryNameFileForOpen)));
-
-        }catch(FileNotFoundException exception){
+            String readFromFile=bufferedReader.readLine();
+            while(readFromFile!=null){
+                if(button.getText().equals("See password")){
+                    passwordField.setText(readFromFile);
+                    readFromFile=bufferedReader.readLine();
+                }
+                else{
+                    textField.setText(readFromFile);
+                    readFromFile=bufferedReader.readLine();
+                }
+            }
+        }catch(Exception exception){
             System.out.println("File can not be load because of the error "+exception.getMessage());
         }
     }
