@@ -11,18 +11,15 @@ public class RadiobuttonExample extends JFrame{
     private ButtonGroup buttonGroup=new ButtonGroup();
 
     private void createComponent(final RadiobuttonExample radiobuttonExample){
-        radioButtonOne.setBounds(10,10,15,15);
-        radioButtonTwo.setBounds(10,30,15,15);
-
-        buttonGroup.add(radioButtonOne);
-        buttonGroup.add(radioButtonTwo);
 
         radioButtonOne.setText("One");
         radioButtonOne.setBounds(10,10,70,20);
         radioButtonOne.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                JOptionPane.showMessageDialog(radiobuttonExample,"You selected One");
+                if(radioButtonOne.isSelected()) {
+                    JOptionPane.showMessageDialog(radiobuttonExample, "You selected One");
+                }
             }
         });
 
@@ -31,9 +28,14 @@ public class RadiobuttonExample extends JFrame{
         radioButtonTwo.addItemListener(new ItemListener(){
             @Override
             public void itemStateChanged(ItemEvent e) {
-                JOptionPane.showMessageDialog(radiobuttonExample,"You selected Two");
+                if(radioButtonTwo.isSelected()) {
+                    JOptionPane.showMessageDialog(radiobuttonExample, "You selected Two");
+                }
             }
         });
+
+        buttonGroup.add(radioButtonOne);
+        buttonGroup.add(radioButtonTwo);
 
         radiobuttonExample.add(radioButtonOne);
         radiobuttonExample.add(radioButtonTwo);

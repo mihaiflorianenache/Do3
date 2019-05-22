@@ -12,10 +12,13 @@ public class CheckboxExample extends JFrame
     private JLabel label = new JLabel();
     private JLabel one=new JLabel();
     private JLabel two=new JLabel();
+    private JLabel selectFavoriteMountains=new JLabel();
     private JButton finish=new JButton();
     private JButton start=new JButton();
     private JCheckBox checkBoxOne=new JCheckBox();
     private JCheckBox checkBoxTwo=new JCheckBox();
+    private JComboBox comboBox;
+    private JButton favoriteMountains=new JButton();
 
     private void createComponent(final CheckboxExample checkBoxExample){
         checkBoxExample.setTitle("CheckBox Example");
@@ -29,6 +32,21 @@ public class CheckboxExample extends JFrame
         two.setBounds(5,70,80,20);
         two.setText("Two");
         checkBoxExample.add(two);
+
+        String mountains[]={"Anzi","Alpi","Pontici","Taurus","Verhoiansk","Kerski","Kolama"};
+        comboBox=new JComboBox(mountains);
+        comboBox.setBounds(50,110,230,30);
+
+        //selectFavoriteMountains.setBounds();
+
+        favoriteMountains.setBounds(50,110,230,30);
+        favoriteMountains.setText("Select your favorite mountains");
+        favoriteMountains.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                favoriteMountains.setVisible(false);
+                checkBoxExample.add(comboBox);
+            }
+        });
 
         start.setBounds(50,110,180,30);
         start.setText("Start");
@@ -72,7 +90,7 @@ public class CheckboxExample extends JFrame
                         label.setText("");
                         checkBoxOne.setEnabled(false);
                         checkBoxTwo.setEnabled(false);
-                        checkBoxExample.add(finish);
+                        checkBoxExample.add(favoriteMountains);
                     }
                 }
             }
@@ -92,7 +110,7 @@ public class CheckboxExample extends JFrame
                         label.setText("");
                         checkBoxOne.setEnabled(false);
                         checkBoxTwo.setEnabled(false);
-                        checkBoxExample.add(finish);
+                        checkBoxExample.add(favoriteMountains);
                     }
                 }
             }
