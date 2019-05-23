@@ -33,9 +33,11 @@ public class CheckboxExample extends JFrame
         two.setText("Two");
         checkBoxExample.add(two);
 
-        String mountains[]={"Anzi","Alpi","Pontici","Taurus","Verhoiansk","Kerski","Kolama"};
+        final String mountains[]={"Anzi","Alpi","Pontici","Taurus","Verhoiansk","Kerski","Kolama"};
         comboBox=new JComboBox(mountains);
         comboBox.setBounds(50,110,230,30);
+        SelectMountains selectMountains=new SelectMountains();
+        comboBox.addItemListener(selectMountains);
 
         //selectFavoriteMountains.setBounds();
 
@@ -122,6 +124,13 @@ public class CheckboxExample extends JFrame
         checkBoxExample.setSize(400,400);
         checkBoxExample.setLayout(null);
         checkBoxExample.setVisible(true);
+    }
+
+    class SelectMountains implements ItemListener{
+        public void itemStateChanged(ItemEvent event){
+            int i;
+            //if(comboBox.getSelectedItem()
+        }
     }
 
     public static void main(String args[])

@@ -21,12 +21,12 @@ public class Balise extends JFrame {
         //textAreaEVC.setBounds(50,50,100,100);
         //textAreaController.setBounds(50,180,100,100);
 
-        textFieldEVC.setBounds(50,50,100,100);
+        textFieldEVC.setBounds(5,50,100,100);
         textFieldController.setBounds(160,50,100,100);
 
         //balise.add(textAreaEVC);
         //balise.add(textAreaController);
-        balise.add(textFieldEVC);
+        //balise.add(textFieldEVC);
         balise.add(textFieldController);
         balise.setVisible(true);
         balise.setLayout(null);
