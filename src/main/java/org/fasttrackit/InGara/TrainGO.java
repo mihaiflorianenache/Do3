@@ -1,6 +1,8 @@
 package org.fasttrackit.InGara;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 public class TrainGO implements Serializable {
     private String range;

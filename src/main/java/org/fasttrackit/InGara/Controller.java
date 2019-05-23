@@ -25,8 +25,18 @@ public class Controller {
             InetAddress IP = InetAddress.getByName("localhost");
             ServerSocket serverSocketServerController = new ServerSocket(1903);
             Socket socketServerController = serverSocketServerController.accept();
+            receiveRequestFromClientController(socketServerController);
         }catch(Exception exception){
             System.out.println("Server controller can not connect with client controller because of the error "+exception.getMessage());
+        }
+    }
+
+    private void receiveRequestFromClientController(Socket socketServerController){
+        try {
+            ObjectInputStream inServerController = new ObjectInputStream(socketServerController.getInputStream());
+            System.out.println("Server controller received from client controller " + inServerController.readObject());
+        }catch(Exception exception){
+            System.out.println("Server controller can not receive request from client controller because of the error "+exception.getMessage());
         }
     }
 
