@@ -6,6 +6,8 @@ public class Balise extends JFrame {
 
     private JTextArea textAreaEVC=new JTextArea();
     private JTextArea textAreaController=new JTextArea();
+    private JTextField textFieldEVC=new JTextField();
+    private JTextField textFieldController=new JTextField();
     private JButton startCommunicationEVC=new JButton();
     private JButton startCommunicationController=new JButton();
 
@@ -16,11 +18,16 @@ public class Balise extends JFrame {
 
     private void createComponents(Balise balise){
         balise.setTitle("Balise");
-        textAreaEVC.setBounds(50,50,100,100);
-       textAreaController.setBounds(50,180,100,100);
+        //textAreaEVC.setBounds(50,50,100,100);
+        //textAreaController.setBounds(50,180,100,100);
+
+        textFieldEVC.setBounds(50,50,100,100);
+        textFieldController.setBounds(160,50,100,100);
 
         //balise.add(textAreaEVC);
-        balise.add(textAreaController);
+        //balise.add(textAreaController);
+        balise.add(textFieldEVC);
+        balise.add(textFieldController);
         balise.setVisible(true);
         balise.setLayout(null);
         balise.setSize(500,500);
