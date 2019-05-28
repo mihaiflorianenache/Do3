@@ -6,18 +6,20 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+//Server Controller
 public class Controller {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         Controller controller=new Controller();
         controller.serverController();
     }
 
-    private void serverController(){
-        EVC evc=new EVC();
+    private void serverController() throws InterruptedException {
+        //EVC evc=new EVC();
         ClientController clientController=new ClientController();
+        //evc.start();
+        //evc.join();
         clientController.start();
-        evc.start();
     }
 
     private void connectClientController(){
@@ -25,7 +27,7 @@ public class Controller {
             InetAddress IP = InetAddress.getByName("localhost");
             ServerSocket serverSocketServerController = new ServerSocket(1903);
             Socket socketServerController = serverSocketServerController.accept();
-            receiveRequestFromClientController(socketServerController);
+           // receiveRequestFromClientController(socketServerController);
         }catch(Exception exception){
             System.out.println("Server controller can not connect with client controller because of the error "+exception.getMessage());
         }
@@ -65,6 +67,7 @@ public class Controller {
         private InetAddress IP;
         public void run(){
             try {
+                connectClientController();
                 IP = InetAddress.getByName("localhost");
                 socketClientController = new Socket(IP, 1903);
                 sendRequestServerController(socketClientController);
