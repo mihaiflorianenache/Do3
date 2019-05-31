@@ -1,16 +1,37 @@
 package Persistence;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import Domain.Users;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsersRepository {
-    public void insertUser(String username) throws SQLException {
+    public void insertUser(Users users) throws SQLException {
         try (Connection connection = DatabaseConfiguration.getConnection()) {
-            String insertUser = "INSERT INTO users(`Username`) VALUES (?)";
+            String insertUser = "INSERT INTO users(`Username`,`Password`) VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
-            preparedStatement.setString(1,username);
+            preparedStatement.setString(1,users.getUsername());
+            preparedStatement.setString(2,users.getPassword());
             preparedStatement.executeUpdate();
+        }
+    }
+
+    public List<Users> getUser() throws SQLException {
+        try(Connection connection=DatabaseConfiguration.getConnection()){
+            String getUser="SELECT Username,Password from users";
+            Statement statement=connection.createStatement();
+            statement.execute(getUser);
+
+            ResultSet resultSet=statement.executeQuery(getUser);
+            List<Users> utilizatori=new ArrayList<>();
+            while(resultSet.next()){
+                Users users=new Users();
+                users.setUsername(resultSet.getString("Username"));
+                users.setPassword(resultSet.getString("Password"));
+                utilizatori.add(users);
+            }
+            return utilizatori;
         }
     }
 }
