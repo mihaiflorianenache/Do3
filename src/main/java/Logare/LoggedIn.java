@@ -12,12 +12,10 @@ public class LoggedIn {
 
     private Users users=new Users();
     private UsersService usersService=new UsersService();
+    private boolean againUsername=false;
+    private boolean againPassword=false;
 
     private void createCredentials(JFrame frame) throws SQLException {
-        frame.setTitle("Sign Up");
-        boolean againUsername=false;
-        boolean againPassword=false;
-
         insertUsername(frame,againUsername);
         insertPassword(frame,againPassword);
         insertCredentials(frame);
@@ -116,12 +114,10 @@ public class LoggedIn {
                 insertPassword(frame,true);
             }
         }
-        System.out.println("gata");
         usersService.insertUser(users);
     }
 
-    private int doYouHaveAccount(){
-        JFrame frame=new JFrame();
+    private int doYouHaveAccount(JFrame frame){
         String options[]=new String[]{"Yes","No"};
         JLabel label=new JLabel();
         label.setText("Do you have a account ?");
@@ -132,7 +128,10 @@ public class LoggedIn {
     public static void main(String args[]) throws SQLException {
         LoggedIn loggedIn=new LoggedIn();
         JFrame frame=new JFrame();
-        int haveAccount=loggedIn.doYouHaveAccount();
+        frame.setSize(500,500);
+        frame.setLayout(null);
+        frame.setVisible(true);
+        int haveAccount=loggedIn.doYouHaveAccount(frame);
         if(haveAccount==1) {
             loggedIn.createCredentials(frame);
         }
@@ -143,13 +142,13 @@ public class LoggedIn {
 
     /*Logged In*/
 
-    private void loggedIn(JFrame frame){
+    private void loggedIn(JFrame frame) throws SQLException {
         insertPersonalUsername(frame);
         insertPersonalPassword(frame);
     }
 
-    private void insertPersonalUsername(JFrame frame){
-        String username=JOptionPane.showInputDialog(frame,"Enter your username");
+    private void insertPersonalUsername(JFrame frame) throws SQLException {
+        checkUsername(frame,againUsername);
     }
 
     private void insertPersonalPassword(JFrame frame){

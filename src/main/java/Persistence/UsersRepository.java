@@ -8,6 +8,10 @@ import java.util.List;
 
 public class UsersRepository {
     public void insertUser(Users users) throws SQLException {
+        //dupa ce se realizeaza verificarea in insertCredentials() din clasa LoggedIn,
+        //in care se testeaza daca userul si parola exista in baza de date
+        //acel user si acea parola
+        //sunt introduse de 2 ori in baza de date
         try (Connection connection = DatabaseConfiguration.getConnection()) {
             String insertUser = "INSERT INTO users(`Username`,`Password`) VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertUser);
